@@ -57,8 +57,16 @@ class CalendarController extends Controller
 
     public function daypage($day_ymd)
     {
-        return view('daypage',compact('day_ymd'));
+        $memos=memo::all();
+        return view('daypage',compact('day_ymd','memos'));
     }
+
+       public function daypost($day_ymd)
+    {
+        return view('daypost',compact('day_ymd'));
+    }
+
+
 
     public function memostore(Request $request,$day_ymd){
         $memos=new memo;

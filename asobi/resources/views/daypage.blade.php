@@ -1,31 +1,42 @@
+<div class="space-y-4 px-4 sm:px-6 lg:px-0 lg:w-[70%] lg:mx-auto">
 
-<div class="space-y-4">
-
-    <h2 class="text-xl font-semibold text-gray-800 text-center">
+    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 text-center">
         {{ $day_ymd }}
     </h2>
 
-    <form method="post" action="{{ route('memostore', $day_ymd) }}" enctype="multipart/form-data" class="space-y-3">
-        @csrf
+    {{-- ボタン：スマホは縦並び、sm以上は横並び --}}
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 sm:gap-4 my-4">
+        <a href="{{ route('daypost', [$day_ymd])}}"
+           class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition text-center text-sm sm:text-base">
+            新規投稿
+        </a>
 
-        <textarea
-            name="memo"
-            rows="4"
-            placeholder="ここにメモを書いてください"
-            class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        ></textarea>
+        <a href=""
+           class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition text-center text-sm sm:text-base">
+            面談を予約する
+        </a>
+    </div>
 
-        <div class="flex justify-end gap-2">
-            <a href="{{ route('home') }}"class="inline-block px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition">
-                閉じる
-            </a>
+    @if($memos)
+        @foreach($memos as $memo)
+            @if(strtotime($day_ymd)==strtotime($memo->post_day))
+                <div class="border rounded-lg p-3 sm:p-4 bg-gray-50 text-sm sm:text-base text-gray-700 shadow-sm mt-5">
+                    <p class="text-xs sm:text-sm text-gray-500">{{ $memo->post_day }}</p>
+                    <p class="mt-2 leading-relaxed break-words">{{ $memo->memo }}</p>
+                </div>
+            @endif
+        @endforeach
+    @else
+        <p class="text-center text-gray-400 text-sm sm:text-base">
+            まだ投稿はありません
+        </p>
+    @endif
 
-            <button type="submit"
-                    class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition">
-                保存
-            </button>
-        </div>
-    </form>
-    
+    <div class="text-right pt-2">
+        <a href="{{ route('home') }}"
+           class="inline-block px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition text-sm sm:text-base">
+            戻る
+        </a>
+    </div>
 
 </div>
