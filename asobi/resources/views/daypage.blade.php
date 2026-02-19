@@ -1,4 +1,5 @@
-<div class="space-y-4 px-4 sm:px-6 lg:px-0 lg:w-[70%] lg:mx-auto h-[60vh] overflow-y-auto overscroll-contain">
+<div class=" sm:px-6 lg:px-0 w-11/12 mx-auto lg:w-4/4 h-[60vh] overflow-y-auto overscroll-contain">
+
 
     <h2 class="text-lg sm:text-xl font-semibold text-gray-800 text-center">
         {{ $day_ymd }}
