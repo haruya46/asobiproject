@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\memo;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class CalendarController extends Controller
 {
      public function home()
@@ -49,7 +49,14 @@ class CalendarController extends Controller
             $weeks[] = $week; // 最後の週
         }
 
-        $memos=memo::all();
+        // $memos=memo::all();
+        $memos=memo::join(DB::raw('(SELECT post_day, MAX(created_at) AS latest_time FROM memos GROUP BY post_day) latest'),
+            function ($join) {
+                $join->on('memos.post_day', '=', 'latest.post_day')
+                     ->on('memos.created_at', '=', 'latest.latest_time');
+            })
+        ->get();
+
         return view('home', compact('weeks','youbi','prev','next','today','memos'));
     }
 
@@ -57,8 +64,22 @@ class CalendarController extends Controller
 
     public function daypage($day_ymd)
     {
-        $memos=memo::all();
-        return view('daypage',compact('day_ymd','memos'));
+        $memos=memo::join(DB::raw('(SELECT post_day, MAX(created_at) AS latest_time FROM memos GROUP BY post_day) latest'),
+            function ($join) {
+                $join->on('memos.post_day', '=', 'latest.post_day')
+                     ->on('memos.created_at', '=', 'latest.latest_time');
+            })->get();
+        $todayMemo = null;
+        $memos_day = null;
+
+        foreach ($memos as $memo) {
+            if ($day_ymd === $memo->post_day) {
+                $todayMemo = $memo->memo;     // 今日の本文だけ
+                break; // 見つかったら抜ける（無駄に回さない）
+            }
+        }
+
+        return view('daypage', compact('day_ymd', 'memos', 'todayMemo'));
     }
 
        public function daypost($day_ymd)
@@ -70,15 +91,33 @@ class CalendarController extends Controller
 
     public function memostore(Request $request,$day_ymd){
         $memos=new memo;
+        $exists=memo::where('post_day', $day_ymd)->exists();
+        if($exists){
+            return $this->home();
+            }
         if($request->memo){
-            $memos->memo=$request->memo;
-            $memos->post_day=$day_ymd;
-            $memos->save();
+        $memos->memo=$request->memo;
+        $memos->post_day=$day_ymd;
+        $memos->save();
+        return $this->home();
         }
-        
-     
+        // // exists()データベースに、その条件のデータが存在するか？」を true / false で教えてくれる命令
         return $this->home();
     }
+
+    public function dayedit(memo $memo , $day_ymd)
+    {
+        return view('dayedit',compact('memo','day_ymd'));
+    }
+
+    public function memoedit(Request $request,$day_ymd,memo $memo){
+        $memo->memo=$request->memo;
+        $memo->post_day=$day_ymd;
+        $memo->save();
+        return $this->home();
+
+    }
+
 
 
         
