@@ -28,7 +28,7 @@
                 </a>
             </div>
                 <div class="border rounded-lg p-3 sm:p-4 bg-gray-50 text-sm sm:text-base text-gray-700 shadow-sm mt-5">
-                    <p class="mt-2 leading-relaxed break-words">{{ $memo->memo }}</p>
+                    <p class="mt-2 leading-relaxed break-words">{!! nl2br(e($memo->memo)) !!}</p>
                 </div>
             @endif
         @endforeach
