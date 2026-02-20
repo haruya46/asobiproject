@@ -4,7 +4,7 @@
   <p class="text-left text-gray-700 text-sm sm:text-base leading-relaxed">
     <b>カレンダー式書き込み掲示板です。</b><br>
     投稿したい日時に投稿がなければ投稿ボタン
-    投稿がなければ編集ボタンから投稿してください。<br>
+    投稿があれば編集ボタンから投稿してください。<br>
     この掲示板には、ルールがあります。</br>
     ルール<br>
     ・不適切な文言は書き込まない<br>
@@ -42,6 +42,17 @@
     </a>
 
 </div>
+<div class="w-full sm:w-4/5 sm:mx-auto mb-3 px-2 sm:px-0">
+    <?php
+        $day_ym = request('ym', date('Y-m'));
+    ?>
+
+    <p class="inline-block px-5 py-3 border border-gray-300 bg-white text-gray-800
+              text-lg sm:text-xl font-semibold shadow-sm text-left">
+        {{ $day_ym }}
+    </p>
+</div>
+
 <div class="flex  justify-center">
   <div class="w-full sm:flex sm:justify-center overflow-x-auto sm:overflow-visible mb-10">
     <table class="calendar w-full table-fixed border-collapse shadow-sm rounded-lg overflow-hidden min-w-[720px] sm:min-w-0">
