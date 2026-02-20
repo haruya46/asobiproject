@@ -4,10 +4,6 @@
 
 <div class="space-y-4 p-4 w-[70%] mx-auto">
 
-    <h2 class="text-xl font-semibold text-gray-800 text-center">
-        {{ $day_ymd }}
-    </h2>
-
     <form method="post" action="{{ route('memostore', $day_ymd) }}" enctype="multipart/form-data" class="space-y-3">
         @csrf
 

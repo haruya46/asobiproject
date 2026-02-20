@@ -1,10 +1,5 @@
 <div class=" sm:px-6 lg:px-0 w-11/12 mx-auto lg:w-4/4 h-[60vh] overflow-y-auto overscroll-contain">
 
-
-    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 text-center">
-        {{ $day_ymd }}
-    </h2>
-
     {{-- ボタン：スマホは縦並び、sm以上は横並び --}}
      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 sm:gap-4 my-4">
        <a href=""
@@ -33,7 +28,6 @@
                 </a>
             </div>
                 <div class="border rounded-lg p-3 sm:p-4 bg-gray-50 text-sm sm:text-base text-gray-700 shadow-sm mt-5">
-                    <p class="text-xs sm:text-sm text-gray-500">{{ $memo->post_day }}</p>
                     <p class="mt-2 leading-relaxed break-words">{{ $memo->memo }}</p>
                 </div>
             @endif

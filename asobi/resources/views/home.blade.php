@@ -91,7 +91,6 @@
                     @foreach($memos as $memo)
                       @if(strtotime($day_ymd) == strtotime($memo->post_day))
                         <div class="border rounded-lg p-3 bg-gray-50 text-sm text-gray-700 shadow-sm">
-                          <p>{{$memo->post_day}}</p>
                           <p class="break-words">{{ $memo->memo }}</p>
                         </div>
                       @endif
