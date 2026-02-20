@@ -111,6 +111,10 @@ class CalendarController extends Controller
     }
 
     public function memoedit(Request $request,$day_ymd,memo $memo){
+
+        if (!$request->filled('memo')) {
+            return redirect()->route('home');
+        }
         $memo->memo=$request->memo;
         $memo->post_day=$day_ymd;
         $memo->save();

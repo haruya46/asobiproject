@@ -10,13 +10,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <a href=""
+                    <a href="{{route('home')}}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600
                             hover:text-blue-600 transition border-b-2 border-transparent
                             hover:border-blue-500">
-                        せいやに面談の申し込みをしよう
+                        カレンダー式掲示板
                     </a>
                 </div>
+                @auth
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="px-3 py-2 rounded bg-gray-200 hover:bg-gray-300">ログアウト</button>
+            </form>
+            @endauth
             </div>
 
             <!-- Hamburger -->
@@ -45,11 +51,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <a href=""
+            <a href="{{route('home')}}"
                class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600
                       hover:text-blue-600 transition border-b-2 border-transparent
                       hover:border-blue-500">
-                せいやに面談の申し込みをしよう
+                カレンダー式掲示板
             </a>
         </div>
     </div>
